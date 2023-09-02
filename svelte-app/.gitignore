@@ -9,3 +9,4 @@ README.md
 rollup.config.js
 package-lock.json
 package.json
+.gitignore
