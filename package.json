@@ -1,0 +1,34 @@
+{
+  "name": "user-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-backend": "node server.js",
+    "start-frontend": "cd svelte-app && npm run dev",
+    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
+    "test": "mocha --exit --timeout 5000 ./test/**/*.test.js",
+    "reset": "sqlite3 users.db \"DROP TABLE user;\" && node seedDatabase.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-swagger-generator": "^1.1.17",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "chai": "^4.3.8",
+    "chai-http": "^4.4.0",
+    "concurrently": "^8.2.1",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
+  }
+}
