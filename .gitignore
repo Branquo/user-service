@@ -1,4 +1,5 @@
 /node_modules/
+svelte-app/
 .env
 QUESTIONS.md
 users.db
@@ -6,4 +7,3 @@ package-lock.json
 package.json
 output.txt
 LICENSE.txt
-/svelte-app/
