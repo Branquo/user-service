@@ -24,9 +24,7 @@ module.exports.authenticateToken = (req, res, next) => {
     if (!token) {
         return res.status(401).json({ message: 'No token provided.' });
     }
-
-    console.log("BLACKLIST:", BLACKLIST);
-
+    
     // check if token blacklisted
     if (BLACKLIST.has(token)) {
         return res.status(401).json({ message: 'Token has been blacklisted.' });

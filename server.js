@@ -16,6 +16,7 @@ const jwtSecret = process.env.JWT_SECRET;
 const PORT = 3000;
 
 const app = express();
+module.exports = app;
 
 // Middleware setup
 app.use(cors()); // cross origin requests

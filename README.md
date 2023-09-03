@@ -60,42 +60,12 @@ This service allows for user management, including adding, updating, and deletin
 
 ## Using
 
-1. Fetch All users
-  - Endpoint: 'GET /users'
-  - Headers: 'X-API-TOKEN: userToken'
-
-2. Add a user (admin)
-  - Endpoint: 'POST /users'
-  - Headers: 'X-API-TOKEN: userToken'
-  - Body:
-  ```
-    {
-      "username": "example",
-      "password": "password123",
-      "role": "ordinary"
-    }
-  ```
-
-3. Delete a user (admin)
-  - Endpoint: 'DELETE /users/{userId}'
-  - Headers: 'X-API-TOKEN: userToken'
-
-4. Update a User's Password (admin)
-  - Endpoint: 'PUT /users/{userId}/password'
-  - Headers: 'X-API-TOKEN: userToken'
-  - Body:
-  ```
-    {
-      "newPassword": "newPassword123"
-    }
-  ```
-
-5. Update ...
+The user service can be used either via the Front-end (Svelte localhost:3000) or via curl commands (using CLI or via localhost:3000/api-docs)
 
 ## Integration Tests
 
 ```
-npm install mocha chai supertest --save-dev
+npm install mocha chai chai-http supertest --save-dev
 ```
 
 in package.json add to "scripts":
