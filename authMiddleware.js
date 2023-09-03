@@ -7,6 +7,15 @@ const jwtSecret = process.env.JWT_SECRET;
 // token blacklist
 const { BLACKLIST } = require('./shared.js');
 
+/**
+ * Middleware to authenticate the token.
+ * Checks the validity of the JWT token in the request header.
+ * If valid, attaches the user payload to the request object.
+ * 
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @param {function} next - Express next middleware function.
+ */
 module.exports.authenticateToken = (req, res, next) => {
     // extract token
     const token = req.header('X-API-TOKEN');
@@ -38,7 +47,13 @@ module.exports.authenticateToken = (req, res, next) => {
     });
 };
 
-// authorize role, chjeck user's role against specified
+/**
+ * Middleware to authorize a specific role.
+ * Ensures that the user's role matches the specified role.
+ * 
+ * @param {string} role - The role to authorize against.
+ * @returns {function} - Returns a middleware function that checks the user's role.
+ */
 module.exports.authorizeRole = (role) => {
     return (req, res, next) => {
         // if no match -> forbidden status (403)

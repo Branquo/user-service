@@ -25,7 +25,7 @@
                 throw new Error("User ID is missing.");
             }
             await axios.put(
-                `http://localhost:${PORT}/updatePassword`,
+                `http://localhost:${PORT}/users/password`,
                 { newPassword: newPassword },
                 {
                     headers: {

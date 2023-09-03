@@ -23,7 +23,7 @@
     async function addUser() {
         try {
             await axios.post(
-                `http://localhost:${PORT}/addUser`,
+                `http://localhost:${PORT}/users`,
                 { username, password, role },
                 {
                     headers: {
@@ -39,7 +39,7 @@
 
     async function deleteUser(user) {
         try {
-            await axios.delete(`http://localhost:${PORT}/deleteUser/${user.id}`, {
+            await axios.delete(`http://localhost:${PORT}/users/${user.id}`, {
                 headers: {
                     "X-API-TOKEN": localStorage.getItem("userToken"),
                 },
@@ -59,7 +59,7 @@
 
         try {
             await axios.put(
-                `http://localhost:${PORT}/updateUserPassword/${user.id}`,
+                `http://localhost:${PORT}/users/${user.id}/password`,
                 { newPassword: user.newPassword },
                 {
                     headers: {

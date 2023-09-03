@@ -21,14 +21,59 @@ const app = express();
 app.use(cors()); // cross origin requests
 app.use(bodyParser.json()); // middleware to parse json requests
 
+const expressSwagger = require('express-swagger-generator')(app);
 
+let options = {
+    swaggerDefinition: {
+        info: {
+            description: 'User Service API',
+            title: 'User Service',
+            version: '1.0.0',
+        },
+        host: 'localhost:3000',
+        basePath: '/',
+        produces: ['application/json'],
+        schemes: ['http', 'https'],
+        securityDefinitions: {
+            JWT: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'X-API-TOKEN',
+                description: "JWT Token",
+            }
+        }
+    },
+    basedir: __dirname, 
+    files: ['./server.js'], // path to the API handlers
+};
+expressSwagger(options);
+
+
+// start Express server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
 
 // root route
+/**
+ * @route GET /
+ * @group Home - Test route to check service status
+ * @returns {object} 200 - Message indicating the service is running
+ * @returns {Error} default - Unexpected error
+ */
 app.get('/', (req, res) => {
     res.json({ message: 'User service is up and running!' });
 });
 
 // get all users with auth
+/**
+ * @route GET /users
+ * @group User - Operations about user
+ * @security JWT
+ * @header {string} X-API-TOKEN - User JWT token
+ * @returns {Array} 200 - List of users with id, username and role
+ * @returns {Error} default - Unexpected error
+ */
 app.get('/users', authenticateToken, (req, res) => {
     const stmt = db.prepare("SELECT id, username, role FROM user");
     stmt.all([], (err, rows) => {
@@ -40,7 +85,16 @@ app.get('/users', authenticateToken, (req, res) => {
 });
 
 // admin route to add new user
-app.post('/addUser', authenticateToken, authorizeRole('admin'), (req, res) => {
+/**
+ * @route POST /users
+ * @group User - Operations about user
+ * @security JWT
+ * @header {string} X-API-TOKEN - User JWT token
+ * @param {string} credentials.body.required - username, password and roles for the user {"username": "sampleUsername", "password": "samplePassword", "role": "ordinary"} or "role": "admin"
+ * @returns {object} 200 - Message indicating the user was added
+ * @returns {Error} default - Unexpected error
+ */
+app.post('/users', authenticateToken, authorizeRole('admin'), (req, res) => {
     const { username, password, role } = req.body;
 
     // Hash the password
@@ -64,7 +118,16 @@ app.post('/addUser', authenticateToken, authorizeRole('admin'), (req, res) => {
 });
 
 // admin route to delete user by ID
-app.delete('/deleteUser/:id', authenticateToken, authorizeRole('admin'), (req, res) => {
+/**
+ * @route DELETE /users/{id}
+ * @group User - Operations about user
+ * @security JWT
+ * @header {string} X-API-TOKEN - User JWT token
+ * @param {integer} id.path.required - ID of the user to delete
+ * @returns {object} 200 - Message indicating the user was deleted
+ * @returns {Error} default - Unexpected error
+ */
+app.delete('/users/:id', authenticateToken, authorizeRole('admin'), (req, res) => {
     const userId = req.params.id;
 
     const stmt = db.prepare("DELETE FROM user WHERE id = ?");
@@ -78,12 +141,14 @@ app.delete('/deleteUser/:id', authenticateToken, authorizeRole('admin'), (req, r
     stmt.finalize();
 });
 
-// start Express server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-
 // route to register new user
+/**
+ * @route POST /register
+ * @group Authentication - User registration and login
+ * @param {string} credentials.body.required - username, password and roles for the user {"username": "sampleUsername", "password": "samplePassword", "role": "ordinary"} or "role": "admin"
+ * @returns {object} 200 - Message indicating the user was registered
+ * @returns {Error} default - Unexpected error
+ */
 app.post('/register', (req, res) => {
     const { username, password, role } = req.body;
 
@@ -112,6 +177,13 @@ app.post('/register', (req, res) => {
 });
 
 // route to handle user login and return JWT
+/**
+ * @route POST /login
+ * @group Authentication - User registration and login
+ * @param {string} credentials.body.required - username and password for the user {"username": "sampleUsername", "password": "samplePassword"}
+ * @returns {object} 200 - Token and role of the authenticated user
+ * @returns {Error} default - Unexpected error
+ */
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -150,7 +222,16 @@ app.post('/login', (req, res) => {
 });
 
 // route to allow user to update their password
-app.put('/updatePassword', authenticateToken, (req, res) => {
+/**
+ * @route PUT /users/password
+ * @group User - Operations about user
+ * @security JWT
+ * @header {string} X-API-TOKEN - User JWT token
+ * @param {string} newPassword.body.required - new password for the user {"newPassword":"samplePassword"}
+ * @returns {object} 200 - Message indicating the password was updated
+ * @returns {Error} default - Unexpected error
+ */
+app.put('/users/password', authenticateToken, (req, res) => {
     const userId = req.user.id;
     const { newPassword } = req.body;
 
@@ -176,7 +257,16 @@ app.put('/updatePassword', authenticateToken, (req, res) => {
 });
 
 // admin route to update a user's password
-app.put('/updateUserPassword/:id', authenticateToken, authorizeRole('admin'), (req, res) => {
+/**
+ * @route PUT /users/{id}/password
+ * @group User - Operations about user
+ * @security JWT
+ * @header {string} X-API-TOKEN - User JWT token
+ * @param {string} credentials.body.required - ID and new password of the user {"id": 1, "newPassword": "samplePassword"}
+ * @returns {object} 200 - Message indicating the user's password was updated
+ * @returns {Error} default - Unexpected error
+ */
+app.put('/users/:id/password', authenticateToken, authorizeRole('admin'), (req, res) => {
     const userId = req.params.id;
     const { newPassword } = req.body;
 
@@ -204,6 +294,14 @@ app.put('/updateUserPassword/:id', authenticateToken, authorizeRole('admin'), (r
 });
 
 // logout and blacklist token
+/**
+ * @route POST /logout
+ * @group Authentication - User registration and login
+ * @security JWT
+ * @header {string} X-API-TOKEN - User JWT token
+ * @returns {object} 200 - Message indicating the user was logged out
+ * @returns {Error} default - Unexpected error
+ */
 app.post('/logout', authenticateToken, (req, res) => {
     const token = req.header('X-API-TOKEN');
     BLACKLIST.add(token);
