@@ -34,4 +34,5 @@ jobs:
         npm install mocha chai chai-http supertest --save-dev
 
     - name: Run Integration Tests
-      run: mocha --exit --timeout 5000 ./test/**/*.test.js
+      run: |
+        mocha --exit --timeout 5000 ./test/**/*.test.js
