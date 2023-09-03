@@ -1,0 +1,12 @@
+# Ignore node modules
+node_modules
+npm-debug.log
+
+# Ignore env files and config
+.env
+
+# Ignore local development files
+*.log
+*.swp
+*.bak
+*.tmp

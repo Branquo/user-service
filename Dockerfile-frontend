@@ -1,0 +1,20 @@
+# Dockerfile-frontend
+FROM node:16
+
+# Create app directory for the frontend
+WORKDIR /usr/src/app/svelte-app
+
+# Copy package.json and package-lock.json from svelte-app
+COPY svelte-app/package.json ./
+COPY svelte-app/package-lock.json ./
+
+# Install app dependencies
+RUN npm install
+
+# Copy the rest of the Svelte application
+COPY svelte-app/ ./
+
+# Expose the frontend port
+EXPOSE 3000
+
+CMD [ "npm", "run", "dev" ]
