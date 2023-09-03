@@ -72,3 +72,8 @@ in package.json add to "scripts":
 ```
   "test": "mocha --exit --timeout 5000 ./test/**/*.test.js"
 ```
+
+run
+```
+npm test
+```

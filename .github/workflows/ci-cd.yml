@@ -1,0 +1,37 @@
+name: User Service CI/CD
+
+on: [push, pull_request]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: |
+        npm init -y
+        npm install express body-parser sqlite3 bcrypt jsonwebtoken dotenv axios concurrently cors express-swagger-generator
+
+    - name: Add test users
+      run: |
+        # Change users if necessary (this could also be done directly in the repo)
+        node seedDatabase.js
+
+    - name: Set up environment
+      run: |
+        cp .env.example .env
+
+    - name: Install testing dependencies
+      run: |
+        npm install mocha chai chai-http supertest --save-dev
+
+    - name: Run Integration Tests
+      run: mocha --exit --timeout 5000 ./test/**/*.test.js
