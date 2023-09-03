@@ -5,10 +5,11 @@
     let username = "";
     let password = "";
     let role = "ordinary";
+    const PORT = 3000;
 
     async function fetchUsers() {
         try {
-            const response = await axios.get("http://localhost:3000/users", {
+            const response = await axios.get(`http://localhost:${PORT}/users`, {
                 headers: {
                     "X-API-TOKEN": localStorage.getItem("userToken"),
                 },
@@ -22,7 +23,7 @@
     async function addUser() {
         try {
             await axios.post(
-                "http://localhost:3000/addUser",
+                `http://localhost:${PORT}/addUser`,
                 { username, password, role },
                 {
                     headers: {
@@ -38,7 +39,7 @@
 
     async function deleteUser(user) {
         try {
-            await axios.delete(`http://localhost:3000/deleteUser/${user.id}`, {
+            await axios.delete(`http://localhost:${PORT}/deleteUser/${user.id}`, {
                 headers: {
                     "X-API-TOKEN": localStorage.getItem("userToken"),
                 },
@@ -58,7 +59,7 @@
 
         try {
             await axios.put(
-                `http://localhost:3000/updateUserPassword/${user.id}`,
+                `http://localhost:${PORT}/updateUserPassword/${user.id}`,
                 { newPassword: user.newPassword },
                 {
                     headers: {

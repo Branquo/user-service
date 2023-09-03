@@ -1,7 +1,6 @@
 <script>
 	// imports
 	import axios from "axios";
-	import dotenv from "dotenv";
 	import Admin from "./Admin.svelte";
 	import User from "./User.svelte";
 
@@ -19,10 +18,13 @@
 	async function handleLogin() {
 		try {
 			// POST request to login endpoint (server.js)
-			const response = await axios.post("http://localhost:{PORT}/login", {
-				username,
-				password,
-			});
+			const response = await axios.post(
+				`http://localhost:${PORT}/login`,
+				{
+					username,
+					password,
+				}
+			);
 
 			// extract token, user role and id
 			const token = response.data.token;
@@ -48,7 +50,7 @@
 		try {
 			// notify server to blacklist token
 			await axios.post(
-				"http://localhost:{PORT}/logout",
+				`http://localhost:${PORT}/logout`,
 				{},
 				{
 					headers: {
@@ -74,7 +76,7 @@
 			const token = localStorage.getItem("userToken");
 			if (token) {
 				const response = await axios.get(
-					"http://localhost:{PORT}/users",
+					`http://localhost:${PORT}/users`,
 					{
 						headers: {
 							"X-API-TOKEN": token,
