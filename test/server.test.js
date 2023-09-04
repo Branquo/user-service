@@ -1,6 +1,6 @@
 const request = require('supertest');
 const chai = require('chai');
-const app = require('../server.js'); // assuming server.js is in the root directory
+const app = require('../server.js');
 
 const expect = chai.expect;
 
@@ -8,7 +8,7 @@ describe('Server Start', () => {
     let server;
 
     before((done) => {
-        server = app.listen(4000, done); // Use a different port to avoid conflict
+        server = app.listen(4000, done);
     });
 
     after((done) => {
