@@ -13,7 +13,7 @@ const { authenticateToken, authorizeRole } = require('./authMiddleware');
 
 const saltRounds = 10;
 const jwtSecret = process.env.JWT_SECRET;
-const PORT = process.env.PORT || 3000; // process.env. for heroku || 3000 for local stuff
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 module.exports = app;
@@ -51,7 +51,7 @@ expressSwagger(options);
 
 
 // start Express server
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
