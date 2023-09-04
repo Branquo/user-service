@@ -44,16 +44,6 @@ or (without docker)
   npm install
   ```
 
-3. Script the concurrent start
-  - In root/package.json change "scripts" to:
-  ```
-  "scripts": {
-    "start-backend": "node server.js",
-    "start-frontend": "cd svelte-app && npm run dev",
-    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\""
-  }
-  ```
-
 ## Adding test users
 
 1. In seedDatabase.js under `// Test users` change `const users` to your liking (or keep unchanged to add the following users)
