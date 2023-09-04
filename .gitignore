@@ -1,6 +1,5 @@
 /node_modules/
 .env
-QUESTIONS.md
 users.db
 output.txt
 LICENSE.txt

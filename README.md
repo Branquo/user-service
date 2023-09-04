@@ -1,6 +1,7 @@
 # User service app
 
 This service allows for user management, including adding, updating, and deleting users.
+[Online available here](http://ec2-13-48-138-213.eu-north-1.compute.amazonaws.com:3000/api-docs)
 
 ## Prerequisites
 
@@ -76,11 +77,6 @@ The user service can be used either via the Front-end (Svelte localhost:3000) or
 
 ```
 npm install mocha chai chai-http supertest --save-dev
-```
-
-in package.json add to "scripts":
-```
-  "test": "mocha --exit --timeout 5000 ./test/**/*.test.js"
 ```
 
 run
