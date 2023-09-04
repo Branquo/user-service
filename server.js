@@ -13,7 +13,7 @@ const { authenticateToken, authorizeRole } = require('./authMiddleware');
 
 const saltRounds = 10;
 const jwtSecret = process.env.JWT_SECRET;
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // process.env. for heroku || 3000 for local stuff
 
 const app = express();
 module.exports = app;
