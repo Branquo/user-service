@@ -4,10 +4,12 @@
     let users = [];
     let newPassword = "";
     const PORT = 3000;
+    const BASE_URL = `http://localhost:${PORT}`;
+
 
     async function fetchUsers() {
         try {
-            const response = await axios.get(`http://localhost:${PORT}/users`, {
+            const response = await axios.get(`${BASE_URL}/users`, {
                 headers: {
                     "X-API-TOKEN": localStorage.getItem("userToken"),
                 },
@@ -25,7 +27,7 @@
                 throw new Error("User ID is missing.");
             }
             await axios.put(
-                `http://localhost:${PORT}/users/password`,
+                `${BASE_URL}/users/password`,
                 { newPassword: newPassword },
                 {
                     headers: {

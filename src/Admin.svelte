@@ -6,10 +6,12 @@
     let password = "";
     let role = "ordinary";
     const PORT = 3000;
+    const BASE_URL = `http://localhost:${PORT}`;
+
 
     async function fetchUsers() {
         try {
-            const response = await axios.get(`http://localhost:${PORT}/users`, {
+            const response = await axios.get(`${BASE_URL}/users`, {
                 headers: {
                     "X-API-TOKEN": localStorage.getItem("userToken"),
                 },
@@ -23,7 +25,7 @@
     async function addUser() {
         try {
             await axios.post(
-                `http://localhost:${PORT}/users`,
+                `${BASE_URL}/users`,
                 { username, password, role },
                 {
                     headers: {
@@ -39,7 +41,7 @@
 
     async function deleteUser(user) {
         try {
-            await axios.delete(`http://localhost:${PORT}/users/${user.id}`, {
+            await axios.delete(`${BASE_URL}/users/${user.id}`, {
                 headers: {
                     "X-API-TOKEN": localStorage.getItem("userToken"),
                 },
@@ -59,7 +61,7 @@
 
         try {
             await axios.put(
-                `http://localhost:${PORT}/users/${user.id}/password`,
+                `${BASE_URL}/users/${user.id}/password`,
                 { newPassword: user.newPassword },
                 {
                     headers: {

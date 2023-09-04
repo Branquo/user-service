@@ -8,6 +8,25 @@ This service allows for user management, including adding, updating, and deletin
 
 ## Building
 
+1. Run
+```
+docker-compose build
+docker-compose up
+```
+
+2. Go to http://localhost:3000/api-docs or install the front-end:
+  ```
+  npx degit sveltejs/template svelte-app
+  cp ./src/* ./svelte-app/src/
+  cp ./svelte-package/* ./svelte-app/
+  cd svelte-app
+  npm install
+  npm run dev
+  ```
+
+or (without docker)
+
+
 1. Clone the repository:
   ```
    git clone https://github.com/Branquo/user-service.git
@@ -20,6 +39,7 @@ This service allows for user management, including adding, updating, and deletin
   npm install express body-parser sqlite3 bcrypt jsonwebtoken dotenv axios concurrently cors express-swagger-generator
   npx degit sveltejs/template svelte-app
   cp ./src/* ./svelte-app/src/
+  cp ./svelte-package/* ./svelte-app/
   cd svelte-app
   npm install
   ```

@@ -8,6 +8,7 @@
 	let username = "";
 	let password = "";
 	const PORT = 3000;
+	const BASE_URL = `http://localhost:${PORT}`;
 
 	// check if auth
 	let authenticated = !!localStorage.getItem("userToken"); // "falsy"
@@ -19,7 +20,7 @@
 		try {
 			// POST request to login endpoint (server.js)
 			const response = await axios.post(
-				`http://localhost:${PORT}/login`,
+				`${BASE_URL}/login`,
 				{
 					username,
 					password,
@@ -50,7 +51,7 @@
 		try {
 			// notify server to blacklist token
 			await axios.post(
-				`http://localhost:${PORT}/logout`,
+				`${BASE_URL}/logout`,
 				{},
 				{
 					headers: {
@@ -76,7 +77,7 @@
 			const token = localStorage.getItem("userToken");
 			if (token) {
 				const response = await axios.get(
-					`http://localhost:${PORT}/users`,
+					`${BASE_URL}/users`,
 					{
 						headers: {
 							"X-API-TOKEN": token,
