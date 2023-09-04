@@ -17,6 +17,8 @@ COPY . .
 # Rename .env.example to .env
 RUN mv .env.example .env
 
+RUN node seedDatabase.js
+
 # Expose the backend port
 EXPOSE 3000
 
