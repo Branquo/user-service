@@ -8,17 +8,6 @@ services:
     volumes:
       - ./src:/usr/src/app/src
     ports:
-      - "5000:5000"
-    environment:
-      - NODE_ENV=development
-
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile-frontend
-    volumes:
-      - ./svelte-app/src:/usr/src/app/svelte-app/src
-    ports:
-      - "8080:3000"
+      - "3000:3000"
     environment:
       - NODE_ENV=development

@@ -14,7 +14,10 @@ RUN npm install
 # Copy the rest of the backend application
 COPY . .
 
+# Rename .env.example to .env
+RUN mv .env.example .env
+
 # Expose the backend port
-EXPOSE 5000
+EXPOSE 3000
 
 CMD [ "node", "server.js" ]
